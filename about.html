@@ -83,7 +83,8 @@ Technical Documentation
 </div>
 </section>
 
-<div class="col-md-6">
+<section class="row mb-5">
+<div class="col-md-4">
 <div class="card h-100 p-4">
 <h3>3D Viewer Features</h3>
 <p><strong>Wireframe Toggle: </strong>Switches 3D model materials from standard sloid view to wirewarframe, allowing users to examine the underyling geometry of each of my models.</p>
@@ -94,7 +95,7 @@ Technical Documentation
 </div>
 </div>
 
-<div class="col-md-6 mb-4">
+<div class="col-md-4">
 <div class="card h-100 p-4">
 <h3>Accessibility</h3>
 <p><strong>Contrast: </strong>I used Dark-mode navbars and footers to provide contrast between text and background, to hel; with readability.</p>
@@ -103,11 +104,9 @@ Technical Documentation
 <p><strong>Semantic HTML:</strong> My website uses semantic elements such as nav, main, section and footer to provide meaningful document structure that makes it easy to navigate.</p>
 </div>
 </div>
-</section>
  
 <!-- Code fixes -->
-<section class="row mb-4">
-<div class="col-md-6">
+<div class="col-md-4">
 <div class="card h-100 p-4">
 <h3>Key Code Fixes and Deeper Understanding</h3>
 <p><strong>Variable Scope Fix: </strong>Initially, modelCache and lightsOn were undeclared, causing a ReferenceError on every function call. ambientLight, mainLight and fillLight were declared as const inside initThreeJS(), making them inaccessible to toggleLights(). I moved all shared variables to module scope to resolve these errors.</p>
@@ -124,6 +123,12 @@ Technical Documentation
 <div class="container-fluid justify-content-between">
 <div class="navbar-text float-left copyright">
 <h3>&copy; 2026 Ayodele's 3D Documentation</h3>
+</div>
+
+<div class="social-icons">
+<a href="https://www.linkedin.com/in/ayodele-pearce-48121a278/" target="_blank"><i class="fab fa-linkedin"></i></a>
+<a href="mailto:ap949@sussex.ac.uk" target="_blank"><i class="fas fa-envelope"></i></a>
+<a href="https://github.com/ayodelepearce/Web-3D-Applications" target="_blank"><i class="fab fa-github-square"></i></a>
 </div>
 </div>
 </nav>
