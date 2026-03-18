@@ -1,0 +1,113 @@
+/* CSS Rules for Lab 1 using Bootstrap.  Note, these rules are laid out mobile first.  
+	That is, the smaller screen rules are shown first
+
+    Note, that CSS rule will propoagte up to larger devices, unless you modify them with a 
+    media query and change the rule
+*/
+
+/* Method to declare your own fonts */
+@font-face {
+    font-family: papyrusFont;
+    src: url(../assets/fonts/papyrus.ttf);
+}
+
+@font-face {
+    font-family: AnticDidone;
+    src: url(../assets/fonts/AnticDidone-Regular.ttf);  
+}
+
+body {
+padding-bottom: 90px;
+background-color: rgba(250, 242, 236, 0.347);
+font-family: 'Open Sans', sans-serif;
+margin: 0;
+}
+
+/* FLUID TYPOGRAPHY */
+h1 { font-size: clamp(1.6rem, 2.5vw, 3rem); }
+h2 { font-size: clamp(1.3rem, 2.5vw, 2.55rem); }
+h3 { font-size: clamp(1rem, 2.5vw, 1.8rem); }
+h4 { font-size: clamp(0.85rem, 2.5vw, 1.5rem); }
+p  { font-size: clamp(0.8rem, 2.5vw, 1.2rem); }
+
+/* Styling all headers to use special font*/
+p {
+font-family: 'Courier New';
+}
+
+h1, h2, h3, h4, h5, h6 {
+font-family: 'papyrusFont'; 
+}
+
+/* NAVBAR */
+#main-navbar {
+border-bottom-left-radius: 25px;
+border-bottom-right-radius: 25px;
+overflow: hidden;
+}
+
+#homepageHeaderTitle {
+color: white;
+font-size: clamp(1.2rem, 3vw, 2.5rem);
+line-height: 1.2;
+}
+
+#homepageHeaderText {
+color: white;
+font-size: clamp(0.8rem, 3vw, 2.1rem);
+font-family: AnticDidone;
+}
+
+/*NavBar items font styling*/
+.navbar-nav .nav-link {
+font-family: AnticDidone;
+font-size: clamp(1.0rem, 2.5vw, 1.5rem);
+}
+
+#main_3d_image {
+background-image: url(assets/images/beach2.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+display: flex;
+align-items: center;
+min-height: 60vh;
+padding: 3rem;
+}
+
+#main_text {
+background: rgba(255, 255, 255, 0.6);
+padding: 2rem;
+border-radius: 25px;
+}
+
+/*style for cards about my favorite things*/
+.card {
+border: none;
+border-radius: 25px;
+margin-top: 10px;
+margin-bottom: 10px;
+box-shadow: 0 4px 8px 0 rgb(0, 0, 0); /* Adds a bit of 3D effect */
+}
+
+.card-img-top {
+height: 300px; /* Adjust this number to your liking */
+object-fit: contain; /* This prevents stretching while keeping the whole image visible */
+padding: 0.5rem;
+}
+
+/* style for buttons*/
+.btn-primary {
+font-family: 'Courier';
+}
+
+#main-footer {
+border-top-left-radius: 25px;
+border-top-right-radius: 25px;
+overflow: hidden;
+}
+
+.social-icons a {
+color: white;
+font-size: 1.6rem;
+margin-left: 0.75rem;
+}

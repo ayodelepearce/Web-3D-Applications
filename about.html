@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1,">
+<title>Ayodele's 3D Web Page</title>
+
+<!-- link to Bootstrap 5.3 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+
+<!--	link to my CSS-->
+<link rel="stylesheet" href="style.css">
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/6ac3910c4e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<nav id="main-navbar" class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+<div class="container-fluid">
+<a class="navbar-brand" href="index.html">
+<h1 id="homepageHeaderTitle" class="mb-0">
+My Design and Development Process
+</h1>
+<h3 id="homepageHeaderText" class="mb-0">
+Technical Documentation
+</h3>
+</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="mainMenu">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="index.html">Retro Console</a></li>
+<li class="nav-item"><a class="nav-link" href="index.html">Pick Axe</a></li>
+<li class="nav-item"><a class="nav-link" href="index.html">Sushi</a></li>
+<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+</ul>
+</div>
+</div>
+</nav>
+
+<main class="container my-5">
+<section class="row mb-5">
+<div class="col-12">
+<div class="card p-4">
+<h2> 3D Model Design Process</h2>
+<p>I created 3 original models using Blender 5.0 on my M1 Macbook Air. The models where: a retro game console, a pickaxe, and a sushi plate. I spent copius amounts of time researching model ideas on Youtube and then iterating them to make it more personal. I drew lots of inspiration from Polygon Runway on Youtube. I found it hard at times to work on my Mac as certain shortcuts in Blender behave differently or are missing.</p>
+<p>For the retro console, I had to purge unused data in Blender to ensure that the image of Mario loaded in correctly. I also had objects within objects which where causing reflaction glitches and making the model look ugly. I fixed it by deling the inner geometry and seperating the top of the console from the bottom by using face select to make them seperate objects. Several objects where sharing the same material as I made them linked duplicates. I fixed it by making each of the duplicates their own seperate object and assigning each object with a specific material. The Mario image on the TV screen was glowing white as i Had set a value for emmission strength. I fixed it by setting emmission to 0 on the Principled BSDF shader. I also removed a duplicate Mario image that was plugged into the wrong socket. </p>
+<p>Initially, I tried setting up my own custom nodes and textures for my pick axe material but then I noticed it was not compatible with GLTF export. So I rebuilt the textures of the pickaxe using samples from ambientCG. I was struggling to get the rice texture of my sushi model to export in GLTF, so I had to manually apply the displace and subdivision modifiers to ensure the displaced geometry was within the mesh. For the salmon color, I sourced a high quality picture of raw sushi and adapted it for my website. For the plate I applied Smart UV project to resolve the plate image texture stretching and warping. For all the models, I packed all the textures using File then External Data then Pack Resources. To guarantee they exported propleryl with the data embedded within the GLB files.</p>
+</div>
+</div>
+</section>
+
+<section class="row mb-5">
+<div class="col-md-6">
+<div class="card h-100 p-4">
+<h3>Design Rationale</h3>
+<p>The UI utilizes a Soft Minimalist aesthetic, I chose to use the fonts that I like to use when reading on my E reader to give it some personilisation. The background color of the Three.js viewer was changed from black to off-white (#f5f0eb) to improve the visibility of the 3D models and remain consistent with the rest of my page.</p>
+<p><strong>Typography:</strong>I used <em>Papyrus</em> for headings to make my headers look classy and <em>AnticDidone</em> for subheaders to make it more visually appealling. I used <em>Fluid Typography (CSS Clamp)</em> to ensure the site is fully responsive from mobile to ultra-wide displays. I also used courier font for the main text body as I like the simplicity and style of it.</p>
+<p><strong>Layout:</strong> I used Bootrap 5.3's fluid grid system with custom 25px border-radius on the cards to create a subtle depth effect. On larger screens, the 3d view and model description are side by sidle while on smaller screens they stack vertically.</p>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="card h-100 p-4">
+<h3>Technical Decisions </h3>
+<p><strong>MVC Architecture: </strong>My website uses a Model-View-Controller pattern, all model data is stored via an SQLite database and managed via PHP. The HTML/CSS is the frontend while Three.js is the controller that fetches data via AJAX dynammically updating the 3D model being seen. </p>
+<p><strong>PHP & SQLite Backend: </strong>A PHP abstraction later connects to the SQLite database to feed model data as JSON. data.pho supports single model queries via ID and dill model queries, making it a simple restful API.</p>
+<p><strong>Local Development: </strong>To ensure that everything was working as intended, I used MacOS's built in CLI "Terminal". I accessed and iterated on my website using Google Chrome via Terminal(php -S localhost:8000). This ensure that SQLite transactions and Three.js model loading was handled nicely withn a HTTP enviroment, bypassing the restrictions of trying to use Launch on Visual Studio Code. </p>
+<p><strong>Hardware-Aware Rendering: </strong>I used window.devicePixelRatio to ensure that the WebGL canvas matches the pixel density of high resolution displays. This ensures that the browser stops upscaling a lower resolution buffer, which was causing texture aliasing and blurry 3D models.</p>
+<p><strong>Texture Quality: </strong>I used anistropic texture filtering to prevent texture blurring at oblique angles. I applied sRGB color space correction for GLTF exports in Blender, this ensured that material colors rendered correctly in Three.js.</p>
+</div>
+</div>
+</section>
+
+<div class="col-md-6">
+<div class="card h-100 p-4">
+<h3>3D Viewer Features</h3>
+<p><strong>Wireframe Toggle: </strong>Switches 3D model materials from standard sloid view to wirewarframe, allowing users to examine the underyling geometry of each of my models.</p>
+<p><strong>Lighting Toggle: </strong>Lighting is on by deafult when the button is pressed the ambient and directional lights are switched off to simulate a dark environment.</p>
+<p><strong>Rotate Button: </strong>Clicking the rotate button triggers a continuos rotation of the object on its Y Axis. This is done by using a boolean flag that is checked within the animation loop.</p>
+<p><Strong>Reset View: </Strong>Returns the camera to its original position, stops active rotations and returns the model back to its original orientation when clicked.</p>
+<p><strong>Orbit Controls: </strong>OrbitControls with damping via Three.js allow for smooth mouse-driven rotation, zoom and pan for full model inspection.</p>
+</div>
+</div>
+
+<div class="col-md-6 mb-4">
+<div class="card h-100 p-4">
+<h3>Accessibility</h3>
+<p><strong>Contrast: </strong>I used Dark-mode navbars and footers to provide contrast between text and background, to hel; with readability.</p>
+<p><strong>Responsive Design: </strong> I used Bootstrap 5.3's grid system to ensure that the website layout adapts correctly across different device and screen sizes. I used CSS clamp() to prevent text elements from becoming too small on mobile or too large on bigger displays.</p>
+<p><strong>Keyboard & Screen Reader Compatibility: </strong>Interactive elements such as navigation links and 3D control buttons are standard HTML elements that can be accessed via keyboard navigation. I applied ARIA labels to interactive 3D elements for screen reader compatibility.</p>
+<p><strong>Semantic HTML:</strong> My website uses semantic elements such as nav, main, section and footer to provide meaningful document structure that makes it easy to navigate.</p>
+</div>
+</div>
+</section>
+ 
+<!-- Code fixes -->
+<section class="row mb-4">
+<div class="col-md-6">
+<div class="card h-100 p-4">
+<h3>Key Code Fixes and Deeper Understanding</h3>
+<p><strong>Variable Scope Fix: </strong>Initially, modelCache and lightsOn were undeclared, causing a ReferenceError on every function call. ambientLight, mainLight and fillLight were declared as const inside initThreeJS(), making them inaccessible to toggleLights(). I moved all shared variables to module scope to resolve these errors.</p>
+<p><strong>Script Placement Fix: </strong>I placed the bootstrap script tag inside the footer nav element, which is invalid HTML. I moved it outside and after the footer to ensure correct parsing and execution order.</p>
+<p><strong>Blender Node Compatibility: </strong>I replaced procedural node setups including noise texture, color ramp and Bump nodes with simple Image Texture nodes connected directly to the Principled BSDF Base Color input. As the GLTF format only supports a limited set of Blender's node graph, so complex nodes are dropped when you try to export.</p>
+<p><strong>Model Orientation: </strong>I set default model rotation values to ensure each model faces the viewer correctly, this is due to the different coordinate systems between Blender (Z-up) and Three.js (Y-up).</p>
+</div>
+</div>
+</section>
+ 
+</main>
+
+<nav id="main-footer" class="navbar navbar-dark bg-dark fixed-bottom">
+<div class="container-fluid justify-content-between">
+<div class="navbar-text float-left copyright">
+<h3>&copy; 2026 Ayodele's 3D Documentation</h3>
+</div>
+</div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
