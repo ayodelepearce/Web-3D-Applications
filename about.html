@@ -92,6 +92,8 @@ Technical Documentation
 <p><strong>Rotate Button: </strong>Clicking the rotate button triggers a continuos rotation of the object on its Y Axis. This is done by using a boolean flag that is checked within the animation loop.</p>
 <p><Strong>Reset View: </Strong>Returns the camera to its original position, stops active rotations and returns the model back to its original orientation when clicked.</p>
 <p><strong>Orbit Controls: </strong>OrbitControls with damping via Three.js allow for smooth mouse-driven rotation, zoom and pan for full model inspection.</p>
+<p><strong>Animation (Pickaxe only): </strong>I added a short swing animation that mimics the motion of mining. The user can trigger it on demand by clicking the Play Animation button. It plays once per click, does not autoplay, and does not loop, matching the deliberate "one swing at a time" message in my model. In Blender I created an Empty PickaxePivot at the origin and parented the three pickaxe meshes to it so the whole tool rotates as one. I then keyframed the  rotation, 0 degrees at rest, minus 50 degrees to lift back, plus 60 degrees on the strike, then back to 0. I exported with the model using GLTF's Sample Animations option so the rotation curves are baked into the GLB. I loaded the model when the pickaxe is the active model. I made the animation manual by using a dedicated button as autoplaying the swing on load would be distracting while the user reads the description.  </p>
+
 </div>
 </div>
 

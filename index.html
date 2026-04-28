@@ -48,23 +48,24 @@
 </nav>
 
 <section id="main_3d_image" class="container-fluid p-0">
-<div id="main_text"> 
+<div id="main_text">
 <h2>Ayodele Pearce Lagos, Nigeria</h2>
 <h3>Born in 2004</h3>
 <p>Ayodele Pearce is a final year FinTech student at the University of Sussex, he is American by birth and Nigerian by ethnicity. He want to secure a good job sooner rather than later.</p>
-</div> 
+</div>
 </section>
 
 <div class="container my-5" id="main-3d-app">
 <div class="row card-container p-4" style="background: rgba(255, 255, 255, 0.6); border-radius: 25px;">
 <div class="col-lg-6">
 <div id="threejs-container" style="width: 100%; height: 450px; background-color: black; border-radius: 25px; box-shadow: 0 10px 30px rgb(114, 108, 108);"></div>
-            
+
 <div class="d-flex justify-content-center gap-2 mt-3">
 <button class="btn btn-dark" onclick="toggleWireframe()">Wireframe</button>
 <button class="btn btn-dark" onclick="toggleLights()">Lighting</button>
 <button class="btn btn-dark" onclick="resetCamera()">Reset View</button>
 <button class="btn btn-dark" onclick="toggleRotation()">Rotate</button>
+<button id="play-anim-btn" class="btn btn-dark" style="display:none" onclick="playAnimation()">Play Animation</button>
 </div>
 </div>
 
@@ -90,7 +91,7 @@
 <a href="javascript:void(0)" class="btn btn-primary" onclick="loadModelData(0); scrollToViewer();">Find out more...</a></div>
 </div>
 </div>
-    
+
 <div class="col-sm-4">
 <div class="card">
 <a href ="#">
@@ -116,7 +117,7 @@
 </div>
 </div>
 </div>
-    
+
 <!--Homepage footer-->
 <nav id="main-footer" class="navbar navbar-dark bg-dark fixed-bottom">
 <div class="container-fluid justify-content-between">
@@ -149,10 +150,12 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 //declaring all shared variables at module scope.
 let scene, camera, renderer, controls, loader;
 let currentModel = null;
-let modelCache = null;  //  was not declared previouslt 
-let lightsOn = true;  // was not declared previosly 
+let modelCache = null;  //was not declared previouslt
+let lightsOn = true;  //was not declared previosly
 let isRotating = false;
-let ambientLight, mainLight, fillLight; // FIX: module-scoped so toggleLights() can reach them
+let ambientLight, mainLight, fillLight; 
+let mixer = null, swingAction = null;
+const animClock = new THREE.Clock();
 
 function initThreeJS() {
 const container = document.getElementById('threejs-container');
@@ -164,14 +167,14 @@ scene.background = new THREE.Color(0xf5f0eb);
 camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
 camera.position.z = 5;
 
-//ensures image is rendered to the devices pixel capabilities  
+//ensures image is rendered to the devices pixel capabilities
 renderer = new THREE.WebGLRenderer({ antialias: true });
 alpha: true
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
 
-//Added orbit controls with smooth rotations 
+//Added orbit controls with smooth rotations
 controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
@@ -191,7 +194,7 @@ animate();
 
 // Fetching the model data from the data.php file, using terminal to launch the website
 window.loadModelData = function(index) {
-const statusEl = document.getElementById('model-status'); // FIX: div now exists in HTML
+const statusEl = document.getElementById('model-status'); // div now exists in HTML
 statusEl.textContent = 'Loading…';
 
 const fetchData = modelCache
@@ -219,24 +222,29 @@ document.getElementById('model-source').innerText      = item.source;
 statusEl.textContent = '';
 
 if (currentModel) { scene.remove(currentModel); currentModel = null; }
+mixer = null; swingAction = null;
+const animBtn = document.getElementById('play-anim-btn');
+if (animBtn) animBtn.style.display = 'none';
+
+const isPickaxe = (index === 1);
+const modelPath = isPickaxe ? 'assets/models/pick_axe.glb' : item.model_path;
 
 loader.load(
-item.model_path,
+modelPath,
 function(gltf) {
 currentModel = gltf.scene;
 
-//new code 
 currentModel.traverse((node) => {
 if (node.isMesh && node.material.map) {
 // Force the texture to use high-quality filtering
 node.material.map.magFilter = THREE.LinearFilter;
 node.material.map.minFilter = THREE.LinearMipmapLinearFilter;
-                
+
 // Using Anisotropy to prevent the image from blurring
 node.material.map.anisotropy = renderer.capabilities.getMaxAnisotropy();
 // ensuring the color is the same as Blender's sRGB export
 node.material.map.colorSpace = THREE.SRGBColorSpace;
-// Tells Three.js that the texture needs to be updated 
+// Tells Three.js that the texture needs to be updated
 node.material.map.needsUpdate = true;
 }
 });
@@ -247,6 +255,16 @@ currentModel.position.sub(center);
 //make the objects load in from front view
 currentModel.rotation.y = 200;
 scene.add(currentModel);
+
+// Set up swing animation only for the pickaxe.
+if (isPickaxe && gltf.animations && gltf.animations.length > 0) {
+mixer = new THREE.AnimationMixer(currentModel);
+swingAction = mixer.clipAction(gltf.animations[0]);
+swingAction.setLoop(THREE.LoopOnce, 1);
+swingAction.clampWhenFinished = true;
+if (animBtn) animBtn.style.display = '';
+}
+
 statusEl.textContent = '';
 },
 function(xhr) {
@@ -280,7 +298,7 @@ ambientLight.intensity = lightsOn ? 0.7  : 0.05;
 mainLight.intensity    = lightsOn ? 1.2  : 0;
 };
 
-//Added reset controls to return to original view 
+//Added reset controls to return to original view
 window.resetCamera = function() {
 camera.position.set(0, 0, 5);
 controls.reset();
@@ -296,6 +314,13 @@ window.toggleRotation = function() {
 isRotating = !isRotating;
 };
 
+//Play the pickaxe swing once per click
+window.playAnimation = function() {
+if (!mixer || !swingAction) return;
+swingAction.reset();
+swingAction.play();
+};
+
 window.scrollToViewer = function() {
 document.getElementById('main-3d-app').scrollIntoView({ behavior: 'smooth' });
 };
@@ -303,6 +328,7 @@ document.getElementById('main-3d-app').scrollIntoView({ behavior: 'smooth' });
 function animate() {
 requestAnimationFrame(animate);
 controls.update();
+if (mixer) mixer.update(animClock.getDelta());
 if (isRotating && currentModel) {
 currentModel.rotation.y += 0.01;
 }

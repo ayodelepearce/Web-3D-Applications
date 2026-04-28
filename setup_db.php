@@ -7,7 +7,7 @@
  * Command line: php database/setup_db.php
  */
 
-$db_path = __DIR__ . '/models.db';
+$db_path = __DIR__ . '/db/models.db';
 
 try {
     $db = new PDO('sqlite:' . $db_path);

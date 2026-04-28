@@ -15,14 +15,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -39,6 +39,11 @@
       <updated>1773397431589</updated>
       <workItem from="1773397433006" duration="5000" />
       <workItem from="1773769244066" duration="7000" />
+      <workItem from="1773862677954" duration="6000" />
+      <workItem from="1776084690378" duration="15000" />
+      <workItem from="1776626619669" duration="3000" />
+      <workItem from="1776627952377" duration="3000" />
+      <workItem from="1777389079413" duration="6000" />
     </task>
     <servers />
   </component>

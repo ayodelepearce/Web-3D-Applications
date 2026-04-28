@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 //Connect to SQLite 
-$db_path = __DIR__ . '/models.db';
+$db_path = __DIR__ . '/db/models.db';
 
 if (!file_exists($db_path)) {
     http_response_code(500);
