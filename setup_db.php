@@ -1,11 +1,4 @@
 <?php
-/**
- * setup_db.php
- * Run this ONCE from the command line or browser to create the SQLite database.
- * Place this file in a /database/ folder, e.g. database/setup_db.php
- *
- * Command line: php database/setup_db.php
- */
 
 $db_path = __DIR__ . '/db/models.db';
 
