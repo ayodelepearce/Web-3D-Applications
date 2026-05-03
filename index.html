@@ -156,6 +156,9 @@ let isRotating = false;
 let ambientLight, mainLight, fillLight; 
 let mixer = null, swingAction = null;
 const animClock = new THREE.Clock();
+//added clicking sound when different buttons are toggled
+const clickSound = new Audio('assets/sounds/click.wav');
+clickSound.volume = 0.7;
 
 function initThreeJS() {
 const container = document.getElementById('threejs-container');
@@ -285,6 +288,7 @@ statusEl.textContent = 'Warning ' + err.message;
 };
 
 window.toggleWireframe = function() {
+clickSound.currentTime = 0; clickSound.play();
   if (!currentModel) return;
   currentModel.traverse(node => {
     if (node.isMesh) node.material.wireframe = !node.material.wireframe;
@@ -292,6 +296,7 @@ window.toggleWireframe = function() {
 };
 
 window.toggleLights = function() {
+clickSound.currentTime = 0; clickSound.play();
 lightsOn = !lightsOn;
 // Works correctly now that variables are declared earlier
 ambientLight.intensity = lightsOn ? 0.7  : 0.05;
@@ -300,6 +305,7 @@ mainLight.intensity    = lightsOn ? 1.2  : 0;
 
 //Added reset controls to return to original view
 window.resetCamera = function() {
+clickSound.currentTime = 0; clickSound.play();
 camera.position.set(0, 0, 5);
 controls.reset();
 //stop the rotation
@@ -311,11 +317,13 @@ currentModel.rotation.set(0,200,0)
 
 //added rotation to make it more interactive
 window.toggleRotation = function() {
+clickSound.currentTime = 0; clickSound.play();
 isRotating = !isRotating;
 };
 
 //Play the pickaxe swing once per click
 window.playAnimation = function() {
+clickSound.currentTime = 0; clickSound.play();
 if (!mixer || !swingAction) return;
 swingAction.reset();
 swingAction.play();
