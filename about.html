@@ -51,13 +51,47 @@ Technical Documentation
 
 <main class="container my-5">
 <section class="row mb-5">
-<div class="col-12">
 <div class="card p-4">
 <h2> 3D Model Design Process</h2>
 <p>I created 3 original models using Blender 5.0 on my M1 Macbook Air. The models where: a retro game console, a pickaxe, and a sushi plate. I spent copius amounts of time researching model ideas on Youtube and then iterating them to make it more personal. I drew lots of inspiration from Polygon Runway on Youtube. I found it hard at times to work on my Mac as certain shortcuts in Blender behave differently or are missing.</p>
-<p>For the retro console, I had to purge unused data in Blender to ensure that the image of Mario loaded in correctly. I also had objects within objects which where causing reflaction glitches and making the model look ugly. I fixed it by deling the inner geometry and seperating the top of the console from the bottom by using face select to make them seperate objects. Several objects where sharing the same material as I made them linked duplicates. I fixed it by making each of the duplicates their own seperate object and assigning each object with a specific material. The Mario image on the TV screen was glowing white as i Had set a value for emmission strength. I fixed it by setting emmission to 0 on the Principled BSDF shader. I also removed a duplicate Mario image that was plugged into the wrong socket. </p>
-<p>Initially, I tried setting up my own custom nodes and textures for my pick axe material but then I noticed it was not compatible with GLTF export. So I rebuilt the textures of the pickaxe using samples from ambientCG. I was struggling to get the rice texture of my sushi model to export in GLTF, so I had to manually apply the displace and subdivision modifiers to ensure the displaced geometry was within the mesh. For the salmon color, I sourced a high quality picture of raw sushi and adapted it for my website. For the plate I applied Smart UV project to resolve the plate image texture stretching and warping. For all the models, I packed all the textures using File then External Data then Pack Resources. To guarantee they exported propleryl with the data embedded within the GLB files.</p>
+<h4 class="mt-4">Retro Console Inspiration</h4>
+<div class="row my-3">
+<div class="col-md-5">
+<div class="ratio ratio-16x9">
+<iframe src="https://www.youtube.com/embed/qJpYNQy1YNo" title="Polygon Runway Retro Console" allowfullscreen></iframe>
 </div>
+</div>
+<div class="col-md-5">
+<img src="assets/images/retro_console_blender_sc.png" class="img-fluid rounded" alt="Retro console final model in Blender">
+</div>
+</div>
+<p>For the retro console, I had to purge unused data in Blender to ensure that the image of Mario loaded in correctly. I also had objects within objects which where causing reflaction glitches and making the model look ugly. I fixed it by deling the inner geometry and seperating the top of the console from the bottom by using face select to make them seperate objects. Several objects where sharing the same material as I made them linked duplicates. I fixed it by making each of the duplicates their own seperate object and assigning each object with a specific material. The Mario image on the TV screen was glowing white as i Had set a value for emmission strength. I fixed it by setting emmission to 0 on the Principled BSDF shader. I also removed a duplicate Mario image that was plugged into the wrong socket.</p>
+
+<h4 class="mt-4">Pickaxe Inspiration</h4>
+<div class="row my-3">
+<div class="col-md-5">
+<div class="ratio ratio-16x9">
+<iframe src="https://www.youtube.com/embed/424SR79NN-g" title="Polygon Runway Pickaxe" allowfullscreen></iframe>
+</div>
+</div>
+<div class="col-md-5">
+<img src="assets/images/pickaxe_blender_sc.png" class="img-fluid rounded" alt="Pickaxe final model in Blender">
+</div>
+</div>
+<p>Initially, I tried setting up my own custom nodes and textures for my pick axe material but then I noticed it was not compatible with GLTF export. So I rebuilt the textures of the pickaxe using samples from ambientCG.</p>
+
+<h4 class="mt-4">Sushi Inspiration</h4>
+<div class="row my-3">
+<div class="col-md-5">
+<div class="ratio ratio-16x9">
+<iframe src="https://www.youtube.com/embed/A7sskded6ec" title="Polygon Runway Sushi Plate" allowfullscreen></iframe>
+</div>
+</div>
+<div class="col-md-5">
+<img src="assets/images/sushi_blender_sc.png" class="img-fluid rounded" alt="Sushi plate final model in Blender">
+</div>
+</div>
+<p>I was struggling to get the rice texture of my sushi model to export in GLTF, so I had to manually apply the displace and subdivision modifiers to ensure the displaced geometry was within the mesh. For the salmon color, I sourced a high quality picture of raw sushi and adapted it for my website. For the plate I applied Smart UV project to resolve the plate image texture stretching and warping. For all the models, I packed all the textures using File then External Data then Pack Resources to guarantee they exported properly with the data embedded within the GLB files.</p>
 </div>
 </section>
 
@@ -92,7 +126,8 @@ Technical Documentation
 <p><strong>Rotate Button: </strong>Clicking the rotate button triggers a continuos rotation of the object on its Y Axis. This is done by using a boolean flag that is checked within the animation loop.</p>
 <p><Strong>Reset View: </Strong>Returns the camera to its original position, stops active rotations and returns the model back to its original orientation when clicked.</p>
 <p><strong>Orbit Controls: </strong>OrbitControls with damping via Three.js allow for smooth mouse-driven rotation, zoom and pan for full model inspection.</p>
-<p><strong>Animation (Pickaxe only): </strong>I added a short swing animation that mimics the motion of mining. The user can trigger it on demand by clicking the Play Animation button. It plays once per click, does not autoplay, and does not loop, matching the deliberate "one swing at a time" message in my model. In Blender I created an Empty PickaxePivot at the origin and parented the three pickaxe meshes to it so the whole tool rotates as one. I then keyframed the  rotation, 0 degrees at rest, minus 50 degrees to lift back, plus 60 degrees on the strike, then back to 0. I exported with the model using GLTF's Sample Animations option so the rotation curves are baked into the GLB. I loaded the model when the pickaxe is the active model. I made the animation manual by using a dedicated button as autoplaying the swing on load would be distracting while the user reads the description.  </p>
+<p><strong>Animation (Pickaxe only): </strong>I added a short swing animation that mimics the motion of mining. The user can trigger it on demand by clicking the Play Animation button. It plays once per click, does not autoplay, and does not loop, matching the deliberate "one swing at a time" message in my model. In Blender I created an Empty PickaxePivot at the origin and parented the three pickaxe meshes to it so the whole tool rotates as one. I then keyframed the  rotation, 0 degrees at rest, minus 50 degrees to lift back, plus 60 degrees on the strike, then back to 0. I exported with the model using GLTF's Sample Animations option so the rotation curves are baked into the GLB. I loaded the model when the pickaxe is the active model. I made the animation manual by using a dedicated button as autoplaying the swing on load would be distracting while the user reads the description.</p>
+<p><strong>Audio Feedback: </strong>I added a click sound effect that plays when Wireframe, Lighting, Reset View, Rotate and Play Animation buttons are toggled. The click sound was sourced from <a href="https://freesound.org/people/Christopherderp/sounds/342200/" target="_blank">Freesound.org</a>, under Creative Commons 0. I implemented this using the JavaScript Audio API, with currentTime at  0 before each play call so the sound triggers cleanly even on continuous clicks.</p>
 
 </div>
 </div>
